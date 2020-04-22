@@ -20,6 +20,7 @@
     path: /etc/default/coturn
     regexp: 'TURNSERVER_ENABLED'
     line: 'TURNSERVER_ENABLED=1'
+  notify: restart coturn
 
 - name: Enable coturn
   service:
