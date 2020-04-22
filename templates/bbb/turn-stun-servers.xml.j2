@@ -5,7 +5,7 @@
         http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
     {% if bbb_turn_enable %}
     <bean id="stun0" class="org.bigbluebutton.web.services.turn.StunServer">
-        <constructor-arg index="0" value="stun:{{ bbb_turn_server }}"/>
+        <constructor-arg index="0" value="stun:{{ bbb_turn_server }}:443"/>
     </bean>
 
 
