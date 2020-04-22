@@ -15,6 +15,8 @@ server {
 {% endif %}
     server_name {{ bbb_hostname }};
 
+    port_in_redirect off;
+
     ssl_certificate {{ bbb_ssl_cert }};
     ssl_certificate_key {{ bbb_ssl_key }};
     ssl_session_cache shared:SSL:10m;
