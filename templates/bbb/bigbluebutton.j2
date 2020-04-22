@@ -7,8 +7,12 @@ server {
 
 
 server {
+{% if bbb_coturn_enable %}
+    listen 127.0.0.1:8443 ssl;
+{% else %}
     listen 443 ssl;
     listen [::]:443 ssl;
+{% endif %}
     server_name {{ bbb_hostname }};
 
     ssl_certificate {{ bbb_ssl_cert }};

@@ -62,10 +62,21 @@
   with_items:
     - "deb [ arch=amd64,arm64 ] http://repo.mongodb.org/apt/ubuntu {{ ansible_distribution_release | lower }}/mongodb-org/{{ mongodb_version | default('3.4') }} multiverse"
     - "deb https://ubuntu.bigbluebutton.org/xenial-220/ bigbluebutton-xenial main"
+    - "ppa:nginx/stable"
+
+- name: Ensure nginx from ppa is pinned
+  copy:
+    content: |
+      Package: *
+      Pin: release n=xenial,o=LP-PPA-nginx-stable
+      Pin-Priority: 1000
+    dest: /etc/apt/preferences.d/ppa-nginx
+    mode: 0755
 
 - name: install bbb and dependencies
   apt:
     name:
+    - nginx
     - mongodb-org
     - bbb-check
     - bbb-html5
