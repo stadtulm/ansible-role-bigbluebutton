@@ -5,19 +5,25 @@
         http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
     {% if bbb_turn_enable %}
     <bean id="stun0" class="org.bigbluebutton.web.services.turn.StunServer">
-        <constructor-arg index="0" value="stun:{{ bbb_turn_server }}"/>
+        <constructor-arg index="0" value="stun:{{ bbb_turn_server }}:3478"/>
     </bean>
 
 
     <bean id="turn0" class="org.bigbluebutton.web.services.turn.TurnServer">
         <constructor-arg index="0" value="{{ bbb_turn_secret }}"/>
-        <constructor-arg index="1" value="turns:{{ bbb_turn_server }}:443?transport=tcp"/>
+        <constructor-arg index="1" value="turns:{{ bbb_turn_server }}:5349?transport=tcp"/>
         <constructor-arg index="2" value="86400"/>
     </bean>
 
     <bean id="turn1" class="org.bigbluebutton.web.services.turn.TurnServer">
         <constructor-arg index="0" value="{{ bbb_turn_secret }}"/>
-        <constructor-arg index="1" value="turn:{{ bbb_turn_server }}:443?transport=tcp"/>
+        <constructor-arg index="1" value="turn:{{ bbb_turn_server }}:3478?transport=tcp"/>
+        <constructor-arg index="2" value="86400"/>
+    </bean>
+
+    <bean id="turn2" class="org.bigbluebutton.web.services.turn.TurnServer">
+        <constructor-arg index="0" value="{{ bbb_turn_secret }}"/>
+        <constructor-arg index="1" value="turn:{{ bbb_turn_server }}:3478?transport=udp"/>
         <constructor-arg index="2" value="86400"/>
     </bean>
     {% endif %}
@@ -36,6 +42,7 @@
                 {% if bbb_turn_enable %}
                 <ref bean="turn0"/>
                 <ref bean="turn1"/>
+                <ref bean="turn2"/>
                 {% endif %}
             </set>
         </property>
