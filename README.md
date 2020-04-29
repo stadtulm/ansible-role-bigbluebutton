@@ -11,6 +11,8 @@ Ansible role for a bigbluebutton installation (following the documentation on ht
 | `bbb_turn_enable` | enable the use uf TURN in general | `yes` |
 | `bbb_turn_server` | the adress for the TURN-Server to use | `{{ bbb_hostname }}` | has to be a fully qualified domain name
 | `bbb_turn_secret` | Secret for the TURN-Server  _(required)_ | | can be generated with `openssl rand -hex 16`
+| `bbb_additional_turn_server` | the address for an additional TURN-Server to use | | has to be a fully qualified domain name. also needed: `bbb_additional_turn_secret`
+| `bbb_additional_turn_secret` | secret for the additional TURN-Server if defined | | only needed, if `bbb_additional_turn_server` is defined
 | `bbb_greenlight_enable` | enable installation of the greenlight client | `yes` |
 | `bbb_greenlight_secret` | Secret for greenlight _(required when using greenlight)_ |  | can be generated with `openssl rand -hex 64`
 | `bbb_greenlight_db_password` | Password for greenlight's database  _(required when using greenlight)_ | | can be generated with `openssl rand -hex 16`

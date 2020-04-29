@@ -8,6 +8,12 @@
         <constructor-arg index="0" value="stun:{{ bbb_turn_server }}:3478"/>
     </bean>
 
+    {% if bbb_additional_turn_server %}
+    <bean id="stun1" class="org.bigbluebutton.web.services.turn.StunServer">
+        <constructor-arg index="0" value="stun:{{ bbb_additional_turn_server }}:3478"/>
+    </bean>
+    {% endif %}
+
 
     <bean id="turn0" class="org.bigbluebutton.web.services.turn.TurnServer">
         <constructor-arg index="0" value="{{ bbb_turn_secret }}"/>
@@ -17,15 +23,17 @@
 
     <bean id="turn1" class="org.bigbluebutton.web.services.turn.TurnServer">
         <constructor-arg index="0" value="{{ bbb_turn_secret }}"/>
-        <constructor-arg index="1" value="turn:{{ bbb_turn_server }}:3478?transport=tcp"/>
-        <constructor-arg index="2" value="86400"/>
-    </bean>
-
-    <bean id="turn2" class="org.bigbluebutton.web.services.turn.TurnServer">
-        <constructor-arg index="0" value="{{ bbb_turn_secret }}"/>
         <constructor-arg index="1" value="turn:{{ bbb_turn_server }}:3478?transport=udp"/>
         <constructor-arg index="2" value="86400"/>
     </bean>
+
+    {% if bbb_additional_turn_server %}
+    <bean id="turn2" class="org.bigbluebutton.web.services.turn.TurnServer">
+        <constructor-arg index="0" value="{{ bbb_additional_turn_secret }}"/>
+        <constructor-arg index="1" value="turns:{{ bbb_additional_turn_server }}:443?transport=tcp"/>
+        <constructor-arg index="2" value="86400"/>
+    </bean>
+    {% endif %}
     {% endif %}
 
     <bean id="stunTurnService"
@@ -34,6 +42,9 @@
             <set>
                 {% if bbb_turn_enable %}
                 <ref bean="stun0"/>
+                {% if bbb_additional_turn_server %}
+                <ref bean="stun1"/>
+                {% endif %}
                 {% endif %}
             </set>
         </property>
@@ -42,7 +53,9 @@
                 {% if bbb_turn_enable %}
                 <ref bean="turn0"/>
                 <ref bean="turn1"/>
+                {% if bbb_additional_turn_server %}
                 <ref bean="turn2"/>
+                {% endif %}
                 {% endif %}
             </set>
         </property>
